@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+body {
+    background-color: rgb(218, 218, 228);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    text-align: center;
+}
+
+.titulo {
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+form {
+    background-color: rgb(236, 233, 233);
+    margin-left: 40%;
+    margin-right: 40%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    display: block;
+    visibility: visible;
+}
+
+.button {
+    margin-top: 1%;
+}
+
+button {
+    margin-top: 1%;
+    background-color: white;
+    padding-right: 1%;
+    padding-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+button:hover {
+    background-color: darkgrey;
+}

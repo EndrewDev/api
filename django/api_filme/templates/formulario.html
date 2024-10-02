@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pr-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="shortcut icon" href="{% static 'base/img/Pictogrammers-Material-Api.512.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'base/css/formulario.css' %}">
+</head>
+<body>
+    <header>
+        <h1 class="titulo">Formulário do filme</h1>
+      <form action="{% url 'formulario' %}" method="post" enctype="multipart/form-data" class="formulario">
+        {% csrf_token %}
+        {{ formulario }}
+        <button class="button" type="submit">Enviar para JSON</button>
+      </form>
+      <a href="{% url 'pagina-inicial' %}"><button>Volta</button></a>
+    </header>
+</body>
+</html>
