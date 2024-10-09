@@ -1,8 +1,10 @@
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_object_or_404
 from .models import Filmes
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+# from rest_framework import generics
+# from .serializers import FilmesSerializer
 
 # Create your views here.
 
@@ -18,14 +20,22 @@ def filmes_view(request):
         novo_filme.save()
         return JsonResponse({'id': novo_filme.id, 'nome': novo_filme.nome_filme, 'tipo': novo_filme.tipo}, status=200)
 
-def detalhe_filme(request, pk):
-    detalhes = get_list_or_404(Filmes, pk=pk)
-    dados = [{'id': detalhe.id, 'nome': detalhe.nome_filme, 'tipo': detalhe.tipo} for detalhe in detalhes]
-    return JsonResponse(dados, safe=False, status=200)
+@csrf_exempt
+def view_detalhes_ataulizar_deleta(request, pk):
+    detalhes = get_object_or_404(Filmes, pk=pk)
 
-def atualizar_filme(request, pk):
-    filme = get_list_or_404(Filmes, pk=pk)
-    dados = json.load(request.body.decode('utf-8'))['nome_filme']
-    filme.nome_filme = dados
-    filme.save()
-    return JsonResponse({'ID': filme.id, 'Nome filme': filme.nome_filme, 'Tipo': filme.tipo}, status=201)
+    if request.method == 'GET':
+        dados = [{'id': detalhe.id, 'nome': detalhe.nome_filme, 'tipo': detalhe.tipo} for detalhe in detalhes]
+        return JsonResponse(dados, status=200)
+    elif request.method == 'POST':
+        dados = json.load(request.body.decode('utf-8'))['nome_filme']
+        detalhes.nome_filme = dados
+        detalhes.save()
+        return JsonResponse({'ID': detalhes.id, 'Nome filme': detalhes.nome_filme, 'Tipo': detalhes.tipo}, status=201)
+    elif request.method == 'DELETE':
+        detalhes.delete()
+        return JsonResponse({'msg': 'Objeto já deletado com sucesso'}, status=204)
+
+# class FilmeCreateListView(generics.ListCraeteAPIView):
+#     queryset = Filmes.objects.all()
+#     serializer_class = FilmesSerializer
