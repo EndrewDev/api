@@ -14,7 +14,7 @@ class FilmeSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         todos_atores = validated_data.pop('atores')
-        filme = Filmes.objects.all(**validated_data)
+        filme = Filmes.objects.create(**validated_data)
         filme.atores.set(todos_atores)
         return filme
 

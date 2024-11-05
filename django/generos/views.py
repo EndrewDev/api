@@ -4,17 +4,17 @@
 # from django.shortcuts import get_object_or_404
 from .models import Generos
 from rest_framework import generics
-from .serializers import GenerosSerializer
+from .serializers import GenerosModelSerializer, GeneroSerializer
 
 # Create your views here.
 
 class GenerosListCreateView(generics.ListCreateAPIView):
     queryset = Generos.objects.all()
-    serializer_class = GenerosSerializer
+    serializer_class = GeneroSerializer
 
 class GenerosUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Generos.objects.all()
-    serializer_class = GenerosSerializer
+    serializer_class = GenerosModelSerializer
 
 # @csrf_exempt
 # def generos_view(request):
