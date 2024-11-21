@@ -33,7 +33,16 @@ class FilmeModelSerializer(serializers.ModelSerializer):
     #         return round(media_avaliacoes, 1)
     #     return None
 
-    # def validated_ano_lancamento(self, value):
-    #     if value < 2000:    
-    #         raise serializers.ValidationError('Não pode cadastrar menor de 2000')
-    #     return value
+    def validate_ano_lancamento(self, dataset):
+        if dataset > 1995:
+            raise serializers.ValidationError("Não pode cadastra maior do 1995")
+        return dataset
+
+    def validate(self, dataset):
+        ano_lacamento = self.dataset['ano_lacamento']
+        data_nascimento = self.dataset['data_nascimento']
+        if ano_lacamento < 1995:    
+            raise serializers.ValidationError('Não pode cadastrar menor de 1995')
+        if data_nascimento > 1995:
+            raise serializers.ValidationError('Não pode cadastra maior do 1995')
+        return dataset

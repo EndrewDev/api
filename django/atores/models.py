@@ -33,3 +33,6 @@ class Ator(models.Model):
     nome = models.CharField(max_length=200)
     data_nascimento = models.DateField()
     nacionalidade = models.CharField(max_length=20, blank=True, null=True, choices=NACIONALIDADES)
+
+    def __str__(self):
+        return self.nome
