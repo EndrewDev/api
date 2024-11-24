@@ -1,4 +1,4 @@
-#!/home/endrew/Documentos/api/django/venv/bin/python3
+#!/home/endrew/Developments/api/django/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
