@@ -41,11 +41,8 @@ class FilmeModelSerializer(serializers.ModelSerializer):
     def validate(self, instance):
         movie_year = instance['ano_lancamento']
         ator = instance['atores']
-
         for i in ator:
-            ator = i.data_nascimento
-            ator_year = ator.year
-            print(ator_year)
-            if ator_year >= movie_year:
-                raise serializers.ValidationError(f'Não pode cadastra ({ator.nome}) mesmo ano lanaçamento do filme ({movie_year}).')
+            ator_year = i.data_nascimento.year
+            if movie_year <= ator_year:
+                raise serializers.ValidationError(f"Não é possível ator {ator.nome} com a data de nascimento ({ator_year}) no ano de lançamento do filme ({movie_year}).")
         return instance

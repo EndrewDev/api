@@ -31,7 +31,7 @@ NACIONALIDADES = (
 
 class Ator(models.Model):
     nome = models.CharField(max_length=200)
-    data_nascimento = models.DateField()
+    data_nascimento = models.DateField(blank=True, null=True)
     nacionalidade = models.CharField(max_length=20, blank=True, null=True, choices=NACIONALIDADES)
 
     def __str__(self):
