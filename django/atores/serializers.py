@@ -28,7 +28,7 @@ NACIONALIDADES = (
     ('AE', 'Emirados Árabes Unidos')
 )
 
-class AtorSerializer(serializers.Serializer):
+class AtoresSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     nome = serializers.CharField()
     data_nascimento = serializers.DateField()
@@ -43,13 +43,3 @@ class AtorModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ator
         fields = '__all__'
-
-    # def validate_data_nascimento(self, instance):
-    #     if instance < 1995:
-    #         raise serializers.ValidationError("Não pode cadastra menor de 1995")
-    #     return instance
-    
-    # def validate(self, dataset):
-    #     if dateset["data_nascimento"] >= 1995:
-    #         raise serializeirs.ValidationError("Não pode cadastra maior do 1995")
-    #     return dataset

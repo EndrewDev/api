@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Filmes
-# from django.db.models import Avg
 from generos.models import Generos
 from atores.models import Ator
 
@@ -20,18 +19,9 @@ class FilmeSerializer(serializers.Serializer):
 
 class FilmeModelSerializer(serializers.ModelSerializer):
 
-    # media_avaliacao = serializers.SerializerMethodField(read_only = True)
-
     class Meta:
         model = Filmes
         fields = '__all__'
-
-    # def get_media_avaliacao(self, instance):
-    #     media_avaliacoes = instance.aggregate(valor_medio=Avg('estrelas'))['valor_medio']
-
-    #     if media_avaliacoes:
-    #         return round(media_avaliacoes, 1)
-    #     return None
 
     #def validate_ano_lancamento(self, value):
     #    if value <= 2000:
@@ -43,6 +33,6 @@ class FilmeModelSerializer(serializers.ModelSerializer):
         ator = instance['atores']
         for i in ator:
             ator_year = i.data_nascimento.year
-            if movie_year <= ator_year:
-                raise serializers.ValidationError(f"Não é possível ator {ator.nome} com a data de nascimento ({ator_year}) no ano de lançamento do filme ({movie_year}).")
+            if ator_year >= movie_year:
+                raise serializers.ValidtionError(f"Não é possível ator {ator.nome} com a data de nascimento ({ator_year}) no ano de lançamento do filme ({movie_year}).")
         return instance
