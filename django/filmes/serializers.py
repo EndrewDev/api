@@ -19,9 +19,15 @@ class FilmeSerializer(serializers.Serializer):
 
 class FilmeModelSerializer(serializers.ModelSerializer):
 
+    message = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Filmes
         fields = '__all__'
+
+    def get_mssage(self, instance):
+        message = ''
+        return message
 
     #def validate_ano_lancamento(self, value):
     #    if value <= 2000:
@@ -30,9 +36,9 @@ class FilmeModelSerializer(serializers.ModelSerializer):
 
     def validate(self, instance):
         movie_year = instance['ano_lancamento']
-        ator = instance['atores']
-        for i in ator:
-            ator_year = i.data_nascimento.year
-            if ator_year >= movie_year:
-                raise serializers.ValidtionError(f"Não é possível ator {ator.nome} com a data de nascimento ({ator_year}) no ano de lançamento do filme ({movie_year}).")
+        actors = instance['atores']
+        for actor in actors:
+            actor_year = actor.data_nascimento.year
+            if actor_year >= movie_year:
+                raise serializers.ValidationError(f"Não é possível ator {actor.nome} com a data de nascimento ({actor_year}) no ano de lançamento do filme({movie_year}).")
         return instance
