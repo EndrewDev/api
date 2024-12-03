@@ -26,7 +26,7 @@ class FilmeModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_mssage(self, instance):
-        message = ''
+        message = 'Welcome letter.'
         return message
 
     #def validate_ano_lancamento(self, value):
