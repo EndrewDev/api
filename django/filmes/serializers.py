@@ -42,3 +42,4 @@ class FilmeModelSerializer(serializers.ModelSerializer):
             if actor_year >= movie_year:
                 raise serializers.ValidationError(f"Não é possível ator {actor.nome} com a data de nascimento ({actor_year}) no ano de lançamento do filme({movie_year}).")
         return instance
+    
