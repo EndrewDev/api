@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV=/home/endrew/developers/api/django/venv
+VIRTUAL_ENV=/home/endrew/fullstack/api/django/venv
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -26,20 +26,28 @@ class FilmeModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_mssage(self, instance):
-        message = 'Welcome letter.'
-        return message
+        return "Welcome letter."
 
     #def validate_ano_lancamento(self, value):
     #    if value <= 2000:
     #        raise serializers.ValidationError("Não pode cadastrado menor de 2000.")
     #    return value
 
-    def validate(self, instance):
-        movie_year = instance['ano_lancamento']
-        actors = instance['atores']
+    def validate(self, data):
+        movie_year = data.get['ano_lancamento']
+        actors = data.get['atores', []]
+        if not movie_year:
+            raise serializers.ValidationError("O ano de lançamento do filme é obrigatório.")
         for actor in actors:
+            
+            if isinstance(actor, int):
+                actor = Ator.objects.get(id=actor)
+            
+            if not actor.data_nascimento:
+                raise serializers.ValidationError(f"O ator {actor.nome} não possui uma data de nascimento válida.")
+            
             actor_year = actor.data_nascimento.year
             if actor_year >= movie_year:
                 raise serializers.ValidationError(f"Não é possível ator {actor.nome} com a data de nascimento ({actor_year}) no ano de lançamento do filme({movie_year}).")
-        return instance
+        return data
     
