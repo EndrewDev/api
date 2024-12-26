@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Filmes
 from generos.models import Generos
 from atores.models import Ator
+from django.db.models import Avg
 
 class FilmeSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -33,21 +34,59 @@ class FilmeModelSerializer(serializers.ModelSerializer):
     #        raise serializers.ValidationError("Não pode cadastrado menor de 2000.")
     #    return value
 
-    def validate(self, data):
-        movie_year = data.get['ano_lancamento']
-        actors = data.get['atores', []]
+    def validate(self, instance):
+        movie_year = instance.get["ano_lancamento"]
+        actors = instance.get["atores"]
         if not movie_year:
             raise serializers.ValidationError("O ano de lançamento do filme é obrigatório.")
+
         for actor in actors:
-            
-            if isinstance(actor, int):
-                actor = Ator.objects.get(id=actor)
-            
             if not actor.data_nascimento:
                 raise serializers.ValidationError(f"O ator {actor.nome} não possui uma data de nascimento válida.")
-            
+
             actor_year = actor.data_nascimento.year
             if actor_year >= movie_year:
-                raise serializers.ValidationError(f"Não é possível ator {actor.nome} com a data de nascimento ({actor_year}) no ano de lançamento do filme({movie_year}).")
-        return data
+                raise serializers.ValidationError(
+                    f"Não é possível ator {actor.nome} com a data de nascimento ({actor_year}) no ano de lançamento do filme({movie_year})."
+                    )
+        return instance
+    
+class FilmeListSerializer(serializers.ModelSerializer):
+    
+    media_avalicao = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = Filmes
+        fields = "__all__"
+
+    def get_media_avaliacao(self, instance):
+        media_avaliacoes = instance.avaliacoes.aggregate(valor_medio=Avg('estrelas'))['valor_medio']
+        if media_avaliacoes:
+            return round(media_avaliacoes, 1)
+        return None
+    
+
+    # genero = GeneroSerializer()
+    # atores = AtoresSerializer(many=True)
+
+    # class Meta:
+    #     model = Filmes
+    #     fields = [
+    #         'id',
+    #         'titulo'
+    #         'media_avalicao'
+    #         'genero',
+    #         'atores',
+    #         'ano_de_lancamento',
+    #         'resumo',
+    #     ]
+
+    # def get_media_avalicao(self, instance):
+    #     media_avaliacoes = instance.avaliacoes.aggregate(valor_medio=Avg("estrela"))[
+    #         'valor'
+    #     ]
+    #     if media_avaliacoes:
+    #         return round(media_avaliacoes, 1)
+        
+    #     return None
     

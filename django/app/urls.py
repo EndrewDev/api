@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/v1/', include('generos.urls')),
     path('api/v1/', include('atores.urls')),
     path('api/v1/', include('filmes.urls')),
+    path('api/v1/', include('avalicao.urls')),
 ]
