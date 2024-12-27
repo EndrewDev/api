@@ -5,10 +5,12 @@
 from .models import Generos
 from rest_framework import generics
 from .serializers import GenerosModelSerializer, GeneroSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 class GenerosListCreateView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated)
     queryset = Generos.objects.all()
     serializer_class = GeneroSerializer
 
