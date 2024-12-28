@@ -30,6 +30,7 @@ class FilmeModelSerializer(serializers.ModelSerializer):
 
     # Se o ator for maior data nascimento do que um filme lançamento, vai se um error:
     def validate(self, instance):
+        print(instance)
         movie_year = instance["ano_lancamento"]
         actors = instance["atores"]
 
