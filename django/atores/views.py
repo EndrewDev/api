@@ -10,5 +10,6 @@ class AtorListCreateView(generics.ListCreateAPIView):
     serializer_class = AtoresSerializer
 
 class AtorUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated)
     queryset = Ator.objects.all()
     serializer_class = AtorModelSerializer

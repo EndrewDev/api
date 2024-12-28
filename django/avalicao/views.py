@@ -7,11 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class AvalicaoListCriaView(generics.ListCreateAPIView):
-    # permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated)
     queryset = Avalicao.objects.all()
     serializer_class = AvalicaoSerializer
 
 class AvaliacaoDetelheAtualizarDeletaleView(generics.RetrieveUpdateDestroyAPIView):
-    # queryset = (IsAuthenticated)
+    queryset = (IsAuthenticated)
     queryset = Avalicao.objects.all()
     serializer_class = AvalicaoSerializer
