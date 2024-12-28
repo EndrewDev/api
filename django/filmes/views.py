@@ -4,10 +4,11 @@ from .serializers import FilmeModelSerializer, FilmeSerializer
 from rest_framework.permissions import IsAuthenticated
 
 class FilmeListCreateView(generics.ListCreateAPIView):
-    # permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated)
     queryset = Filmes.objects.all()
     serializer_class = FilmeSerializer
 
 class FilmeUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated)
     queryset = Filmes.objects.all()
     serializer_class = FilmeModelSerializer
