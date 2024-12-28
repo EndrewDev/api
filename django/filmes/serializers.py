@@ -52,10 +52,10 @@ class FilmeModelSerializer(serializers.ModelSerializer):
     
     # Avaliação
     def get_media_avaliacao(self, instance):
-        media_de_avaliacao = instance.avaliacoes.aggregate(valor_medio=Avg('estrelas'))['valor_medio']
+        media_avaliacoes = instance.avalicoes.aggregate(valor_medio=Avg('estrelas'))['valor_medio']
 
-        if media_de_avaliacao:
-            return round(media_de_avaliacao, 1)
+        if media_avaliacoes:
+            return round(media_avaliacoes, 1)
         
         return None
     
